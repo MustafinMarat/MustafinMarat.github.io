@@ -10,7 +10,7 @@
     gl = canvas.getContext("webgl2");
 
     if (gl === null) {
-      alert("WebGL2 not sapported");
+      alert("WebGL2 not supported");
       return;
     }
     
@@ -52,7 +52,7 @@
       Z = vec2(Z.x * Z.x - Z.y * Z.y, 2.0 * Z.x * Z.y) + vec2(cos(Time) / 3.0, sin(Time) / 3.0);  
       n += 1.0;
     }
-    OutColor = vec4(n / 255.0, n / 255.0, n / 255.0, 1.0);
+    OutColor = vec4(n / 8.0, n / 30.0, n / 47.0, 1.0);
   }
   `;
     let
