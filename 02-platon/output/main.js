@@ -900,15 +900,10 @@
       this.gl.clear(this.gl.COLOR_BUFFER_BIT);
       this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
       
-      const date = new Date();
-      let t = date.getMinutes() * 60 +
-            date.getSeconds() +
-            date.getMilliseconds() / 1000;
-
       // Drawing primitives
       if (this.prims != undefined)
         for (let prm of this.prims)
-          prm.draw(prm.matr.mul(mat4().setRotateX(30 * t)).mul(mat4().setRotateZ(47 * t)), this.cam);
+          prm.draw(prm.matr, this.cam);
     } // End of 'render' function 
 
     setControl() {
