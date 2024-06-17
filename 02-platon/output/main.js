@@ -81,9 +81,8 @@
     
     void main( void )
     {
-      vec3 L = normalize(vec3(cos(Time * 5.0) * 2.0, sin(Time * 5.0) * 2.0, 1.0));
       vec3 N = normalize(faceforward(DrawNormal, CamDir, DrawNormal));
-      vec3 col = vec3(0.8, 0.47, 0.30) * dot(N, L);
+      vec3 col = vec3(0.8, 0.47, 0.30) * dot(N, -CamDir);
       OutColor = vec4(col, 1.0);
     }
     `;
