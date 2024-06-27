@@ -26,12 +26,16 @@ function main() {
   if (window.socket == undefined)
     window.socket = socket;
 
-  socket.onopen = (event) => {
+  socket.onopen = () => {
     socket.send(JSON.stringify({type: "connect", text: playerName, color: playerColor}));
   };
 
   socket.onmessage = (event) => {
     let info = JSON.parse(event.data);
+    if (info.type == "nameError") {
+      alert(info.data)
+      window.location.href = "/index.html";
+    }
     if (info.type == "newPlayer") {
       players[info.data.name] = unit.enemyUnit(rnd, info.data.name, vec3(info.data.pos), vec3(info.data.color));
       if (info.data.name) {
@@ -41,8 +45,8 @@ function main() {
         chatWindow.appendChild(newPlayer);
       }
     }
-    if (info.type == "start") 
-      for (let character in info.data)
+    if (info.type == "start") {
+      for (let character in info.data)  
         if (character != playerName) {
           players[character] = unit.enemyUnit(rnd, character, vec3(info.data[character].pos), vec3(info.data[character].color));
           let newPlayer = document.createElement('div');
@@ -50,6 +54,7 @@ function main() {
           newPlayer.innerText = character;
           chatWindow.appendChild(newPlayer);
         }
+    }
     if (info.type == "setPos")
       for (let character in info.data)
         if (character != playerName)
@@ -68,6 +73,10 @@ function main() {
       if (info.data.hit == playerName) {
         me.hp--;
         document.querySelector("#healthPoints").textContent = `HP: ${me.hp}`;
+        document.querySelector("#damage").className = "isDamaged";
+        setTimeout(() => {
+          document.querySelector("#damage").className = "nonDamaged";
+        }, 100);
         if (me.hp <= 0) 
           window.location.href = "/index.html";
       }
